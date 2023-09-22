@@ -1,4 +1,51 @@
-<h1>Contact Manager App</h1>
-<div class="card flex justify-content-center">
-  <p-button label="Check" icon="pi pi-check"></p-button>
-</div>
+<div class="main-container">
+    <p-card class="py-3" header="OCEM Contact Manager_V1">
+      <p class="m-0">
+        A simple contact manager develop by @Saroj Padhan
+      </p>
+
+      <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
+      <div *ngIf="_id">{{_id}}</div>
+      <div class="flex gap-3 align-items-center justify-content-center flex-wrap py-5">
+        <div class="field">
+          <span class="p-float-label">
+          <input pInputText id="first_name" [(ngModel)]="contactModel.first_name" />
+          <label htmlFor="first_name">First Name</label>
+          </span>
+        </div>
+        <div class="field">
+          <span class="p-float-label">
+          <input pInputText id="last_name" [(ngModel)]="contactModel.last_name" />
+          <label htmlFor="last_name">Last Name</label>
+          </span>
+        </div>
+
+        <div class="field">
+          <span class="p-float-label">
+          <input pInputText id="email" [(ngModel)]="contactModel.email" />
+          <label htmlFor="email">Email Address</label>
+          </span>
+        </div>
+        <div class="field">
+          <p-inputMask mask="999 999-9999" [(ngModel)]="contactModel.phone" placeholder="(+91) 9999-999-999"></p-inputMask>
+        </div>
+      </div>
+      <div class="card py-3 flex justify-content-center">
+        <p-button [loading]="loading" label="Create" (onClick)="createContact()" icon="pi pi-check"></p-button>
+      </div>
+    </p-card>
+<!--    read contacts -->
+  <div class="card py-3 flex flex-wrap justify-content-between">
+
+    <p-card *ngFor="let con of contacts " class="m-1" [header]="con.phone">
+      <p>{{con.first_name}} {{con.last_name}}</p>
+      <p class="m-0">
+        {{con.email}}
+      </p>
+    </p-card>
+  </div>
+  </div>
+
+
+
+
