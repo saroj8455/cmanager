@@ -1,10 +1,10 @@
 <div class="main-container">
-    <p-card class="py-3" header="OCEM Contact Manager_V1">
+    <p-card class="my-3 py-5" header="OCEM Contact Manager_V1">
       <p class="m-0">
         A simple contact manager develop by @Saroj Padhan
       </p>
-
-      <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
+      <p-toast></p-toast>
+<!--      <p-messages [(value)]="messages" [enableService]="true" [closable]="true"></p-messages>-->
       <div *ngIf="_id">{{_id}}</div>
       <div class="flex gap-3 align-items-center justify-content-center flex-wrap py-5">
         <div class="field">
@@ -29,6 +29,15 @@
         <div class="field">
           <p-inputMask mask="999 999-9999" [(ngModel)]="contactModel.phone" placeholder="(+91) 9999-999-999"></p-inputMask>
         </div>
+        <div class="field">
+          <p-multiSelect [options]="courses" [(ngModel)]="selectedCourses" display="chip" defaultLabel="Select a Course" optionLabel="name"></p-multiSelect>
+        </div>
+        <div class="field">
+          <p-calendar [(ngModel)]="date" [showButtonBar]="true" placeholder="Registration date"></p-calendar>
+        </div>
+        <div class="field">
+          <textarea rows="5" cols="30" placeholder="Enter your address" pInputTextarea [(ngModel)]="value"></textarea>
+        </div>
       </div>
       <div class="card py-3 flex justify-content-center">
         <p-button [loading]="loading" label="Create" (onClick)="createContact()" icon="pi pi-check"></p-button>
@@ -45,6 +54,10 @@
     </p-card>
   </div>
   </div>
+<div class="main-container">
+  <app-datatbl></app-datatbl>
+</div>
+
 
 
 

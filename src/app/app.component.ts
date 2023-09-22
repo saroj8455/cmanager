@@ -1,8 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {Contact, ContactModel, IResponse} from "../model/contact-model";
 import {ContactService} from "./services/contact.service";
-import {Message} from "primeng/api";
+import {Message, MessageService} from "primeng/api";
 import {Observable} from "rxjs";
+
+
+
+interface Course {
+  name: string,
+  code: string
+}
+
+
 
 @Component({
   selector: 'app-root',
@@ -20,15 +29,26 @@ export class AppComponent implements OnInit{
   $resp:Observable<IResponse> = this.contactService.readContacts();
 
   contactModel = new ContactModel("","","","")
-
-  constructor(private contactService:ContactService) {
+  courses!: Course[];
+  selectedCourses!: Course[];
+  date!:Date[]
+  constructor(private contactService:ContactService,private messageService: MessageService) {
   }
 
   ngOnInit() {
     this.contactService.readContacts().subscribe((resp)=>{
       this.totalCount = `Total Contacts: ${resp.count}`
       this.contacts = resp.contacts;
+      this.messageService.add({ severity: 'success', summary: 'Product Selected', detail: "Read all contacts" })
     })
+
+    this.courses = [
+      {name: 'DCA', code: 'DCA'},
+      {name: 'PGDCA', code: 'PGDCA'},
+      {name: 'TALLY', code: 'TALLY'},
+      {name: 'MS-OFFICE', code: 'MS-OFFICE'},
+      {name: 'ADCA', code: 'ADCA'}
+    ];
   }
 
   createContact(){
@@ -36,6 +56,9 @@ export class AppComponent implements OnInit{
     this.contactService.createContact(this.contactModel).subscribe((res)=>{
       this._id = res._id;
       this.loading = false
+      this.messages.push({ severity: 'success', summary: 'Contact Created', detail: "Save to remote DB" })
+      // this.messageService.add(this.messages)
+      this.messageService.add({ severity: 'success', summary: 'Contact Created', detail: "Save to remote DB" })
     })
   }
 
